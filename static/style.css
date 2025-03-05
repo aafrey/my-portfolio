@@ -99,7 +99,7 @@ button:hover {
 }
 /* PROJECTS */
 /* Style for individual project items */
-/* .project-item {
+.project-item {
   background-color: var(--border-gray, #eee);
   padding: 1rem;
   border-radius: 5px;
