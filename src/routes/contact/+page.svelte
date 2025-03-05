@@ -1,4 +1,4 @@
-<script src="../global.js"></script>
+<script src="../../../static/global.js"></script>
 <h1>Contact Me!</h1>
         <form action="mailto:aafrey@mit.edu" method="GET">
             <!-- Email Field -->
