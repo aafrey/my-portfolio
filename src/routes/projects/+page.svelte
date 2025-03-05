@@ -1,12 +1,18 @@
-<script src="../global.js"></script>
+<!-- <script src="../global.js"></script> -->
+<script>
+    import projects from "$lib/projects.json";
+  </script>
 <h1>Projects</h1>
+<html lang="en", class = "home"></html>
         <div class="projects">
+    {#each projects as p}
         <article>
             <h2>Lorem ipsum dolor sit.</h2>
             <img src="https://vis-society.github.io/labs/2/images/empty.svg" alt="">
             <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquid nisi cumque dolore doloremque facere, fugit sequi, rerum culpa consequatur dolorum perferendis dicta nemo fuga nihil, quisquam quis inventore soluta corporis?</p>
         </article>
-        <article>
+        {/each}
+        <!-- <article>
             <h2>Harum praesentium enim alias?</h2>
             <img src="https://vis-society.github.io/labs/2/images/empty.svg" alt="">
             <p>Maiores, quibusdam et facere asperiores nam natus illum reiciendis suscipit tempora numquam, illo accusantium voluptates. Numquam dolores maxime vero ullam sit iusto officiis repellendus tempore molestiae, nulla, rem ipsam eos.</p>
@@ -60,5 +66,5 @@
             <h2>Facere repudiandae ea laudantium!</h2>
             <img src="https://vis-society.github.io/labs/2/images/empty.svg" alt="">
             <p>Tenetur ut reprehenderit, unde tempore eveniet tempora amet! Excepturi consectetur laudantium quam voluptates ad molestias distinctio assumenda iste commodi autem numquam error quisquam placeat officiis aliquam qui, quo vitae reprehenderit!</p>
-        </article>
+        </article> -->
     </div>
