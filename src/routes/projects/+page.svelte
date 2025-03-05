@@ -3,7 +3,8 @@
     src="../global.js"
     import projects from "$lib/projects.json";
   </script>
-<h1>Projects { projects.length } </h1>
+<pre>{ JSON.stringify(projects, null, "\t") }</pre>
+<!-- <h1>Projects { projects.length } </h1>
 <html lang="en", class = "home"></html>
         <div class="projects">
     {#each projects as p}
@@ -13,4 +14,4 @@
             <p>{p.description}</p>
         </article>
         {/each}
-    </div>
+    </div> -->
