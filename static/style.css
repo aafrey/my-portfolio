@@ -1,0 +1,142 @@
+:root {
+  --color-accent: oklch(65% 50% 0); /* Primary accent color in OKLCH format */
+  --border-gray: oklch(80% 3% 200); /* Gray for borders */
+  /* ADD the rest of the color definitions here if needed! */
+  color-scheme: dark;
+    --text-color: black;
+    --background-color: white;
+}
+
+.color-scheme {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.color-scheme select {
+  font-size: 80%;
+}
+
+
+/* STEP 1: Prevent content from getting too wide */
+
+/* 
+  Here we can define the base style for the body element. We already added this in Lab 1, but let's complete it!
+*/
+body {
+  font: 100%/1.5 system-ui; /* 100% font size, 1.5 line height, system font. Same as in lab 1 */
+  max-width: 100ch; /* Limits width to 50 rems for better readability */
+  /* Add here margin-inline */
+  margin-inline: 80px;
+  /* Add here padding around the body */
+  padding: 15px;
+
+  /* Improve Flexbox layout */
+  nav a {
+    text-decoration: none; /* Remove underline */
+    padding: 0.5rem 1rem; /* Add spacing */
+    border-radius: 5px; /* Rounded corners */
+    /* color: white; */
+  }
+
+  nav a:hover {
+    /* background-color: oklch(70% 30% 240); blue highlight effect */
+    /* background-color: color-mix(in oklch, var(--color-accent), canvas 85%); */
+    background-color: oklch(75% 35% 220);
+  }
+
+  /* Ensure equal spacing */
+  nav {
+    display: flex;
+    justify-content: center; /* Center navigation links */
+    gap: 1rem;
+    --border-color: oklch(50% 10% 200 / 40%);
+}
+/*CONTACT ME*/
+/* Improve Form Layout */
+form {
+  max-width: 500px; /* Prevent form from stretching too wide */
+  margin: 2rem auto; /* Center the form */
+  padding: 1rem;
+}
+
+/* Labels */
+label {
+  display: block; /* Make labels appear on top of inputs */
+  font-weight: bold; /* Highlight labels */
+  margin-block: 0.5rem; /* Add space above and below */
+}
+
+/* Inputs & Textarea */
+input, textarea {
+  display: block; /* Make inputs take full width */
+  width: 100%; /* Full width of form */
+  padding: 0.75rem; /* Comfortable padding */
+  font: inherit; /* Inherit font from body */
+  border: 1px solid var(--border-gray, #ccc); /* Subtle border */
+  border-radius: 5px; /* Slightly rounded corners */
+  box-sizing: border-box; /* Ensure padding doesn’t affect width */
+}
+
+/* Submit Button */
+button {
+  width: 100%; /* Full width button */
+  padding: 0.75rem;
+  margin-top: 1rem;
+  font: inherit;
+  background-color: var(--color-accent, #007bff);
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: darkblue;
+}
+/*PROJECTS*/
+/* Style for individual project items */
+.project-item {
+  background-color: var(--border-gray, #eee);
+  padding: 1rem;
+  border-radius: 5px;
+  text-align: center;
+  font-weight: bold;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.projects {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(15em, 1fr));
+  gap: 1rem;
+  padding: 1rem;
+  align-items: start;
+}
+
+/* Ensure each project article aligns consistently */
+article {
+  display: grid;
+  grid-template-rows: subgrid;
+  grid-row: span 3;
+  align-items: start;
+}
+
+/* Ensure headings, images, and text are consistently spaced */
+h2 {
+  margin: 0;
+}
+
+img {
+  width: 100%;
+  height: auto;
+  object-fit: cover; /* Ensures images scale consistently */
+}
+
+/* Keep text aligned properly */
+p {
+  margin-top: 0;
+}
+}
