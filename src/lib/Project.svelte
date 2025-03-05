@@ -12,13 +12,14 @@
 <style>
     /* Style the article container */
     article {
-        background-color: var(--border-gray, #eee);
-        padding: 1rem;
-        border-radius: 5px;
-        text-align: center;
-        font-weight: bold;
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    }
+    background-color: var(--border-gray, #eee);
+    padding: 1rem;
+    border-radius: 5px;
+    text-align: center;
+    font-weight: bold;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    width: 100%; /* Ensures it fits inside the grid column */
+}
     
     /* Ensure images scale properly */
     img {
