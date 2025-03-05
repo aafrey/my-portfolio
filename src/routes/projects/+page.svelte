@@ -3,7 +3,7 @@
     src="../global.js"
     import projects from "$lib/projects.json";
   </script>
-<h1>Projects</h1>
+<h1>Projects { projects.length } </h1>
 <html lang="en", class = "home"></html>
         <div class="projects">
     {#each projects as p}
