@@ -97,9 +97,9 @@ button {
 button:hover {
   background-color: darkblue;
 }
-/*PROJECTS*/
+/* PROJECTS */
 /* Style for individual project items */
-.project-item {
+/* .project-item {
   background-color: var(--border-gray, #eee);
   padding: 1rem;
   border-radius: 5px;
@@ -133,10 +133,35 @@ img {
   width: 100%;
   height: auto;
   object-fit: cover; /* Ensures images scale consistently */
-}
+} */
 
 /* Keep text aligned properly */
 p {
   margin-top: 0;
 }
+/*Add formatting for headings*/
+h1 {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+
+h2 {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+h3 {
+  font-size: 1.3rem;
+  font-weight: bold;
+  margin-bottom: 8px;
+}
+
+h4 {
+  font-size: 1.1rem;
+  font-weight: bold;
+  margin-bottom: 6px;
+}
+
 }
