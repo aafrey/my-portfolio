@@ -55,7 +55,8 @@ for (let p of pages) {
 
 	// Create link and add it to nav 
     if (!ARE_WE_HOME && !url.startsWith("http")) {
-		url = "../" + url;
+		// url = "../" + url;
+        url = "/my-portfolio/" + url;
 	}
     console.log(url, ARE_WE_HOME);
 
