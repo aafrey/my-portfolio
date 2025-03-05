@@ -6,7 +6,7 @@
   </script>
 <h1>Featured Projects</h1>
 <div class="projects">
-    {#each projects.slice(0, 3) as p}
-    <Project data={p} hLevel="3" />
+    {#each projects as p}
+    <Project data={p} />
     {/each}
 </div>
