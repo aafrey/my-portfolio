@@ -16,9 +16,9 @@ import adapter from '@sveltejs/adapter-static';
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
 	kit: {
-		adapter: adapter({ fallback: '404.html' }),
+		adapter: adapter({ fallback: '404.html' }),  // Handle 404 fallback page for static deployment
 		paths: {
-			base: process.argv.includes('dev') ? '' : process.env.BASE_PATH,
+			base: process.argv.includes('dev') ? '' : process.env.BASE_PATH || '',  // Ensure it's an empty string for local dev
 		},
 	},
 };
