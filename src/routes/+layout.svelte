@@ -18,7 +18,7 @@
       { url: "https://github.mit.edu/aafrey", title: "GitHub" }, 
     ];
     // Fetch github data
-    let profileData = fetch("https://api.github.com/users/your-username")
+    let profileData = fetch("https://api.github.com/users/aafrey")
     .then((response) => response.json())
     .catch((error) => ({ error: error.message }));
   </script>
