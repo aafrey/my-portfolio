@@ -108,16 +108,16 @@ function $$ (selector, context = document) {
 // TODO: Inside your styles.css file, adjust your navigation menu colors! There is nothing to do in this file in this step.
 
 // step 4.2
-document.body.insertAdjacentHTML("afterbegin", `
-	<label class="color-scheme">
-		Theme:
-		<select id="theme-selector">
-            <option value="light">Light</option>
-            <option value="dark">Dark</option>
-            <option value="automatic">Automatic</option>
-        </select>
-	</label>`
-);
+// document.body.insertAdjacentHTML("afterbegin", `
+// 	<label class="color-scheme">
+// 		Theme:
+// 		<select id="theme-selector">
+//             <option value="light">Light</option>
+//             <option value="dark">Dark</option>
+//             <option value="automatic">Automatic</option>
+//         </select>
+// 	</label>`
+// );
 
 // step 4.3
 // TODO: Inside your styles.css file, add styling to move the switcher with class .color-scheme to the top right corner. There is nothing to do in this file in this step
