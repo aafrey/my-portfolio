@@ -1,10 +1,11 @@
 <script>
     import { page } from "$app/stores";
     let pages = [
-      { url: "/", title: "Home" },
+      { url: "/my-portfolio/", title: "Home" },
       { url: "./projects", title: "Projects" },
       { url: "./contact", title: "Contact" },
-      // add the rest of your pages here
+      { url: "./resume", title: "Resume" }, 
+      { url: "https://github.mit.edu/aafrey", title: "GitHub" }, 
     ];
   </script>
   
