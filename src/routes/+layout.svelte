@@ -1,6 +1,15 @@
 <script>
     import { page } from "$app/stores";
-    let colorScheme = "light dark"; // Initialize the color scheme
+    let localStorage = globalThis?.localStorage ?? {}; // Access localStorage safely
+    let colorScheme = localStorage.colorScheme ?? "light dark"; // Set default if no saved theme
+    
+    let root = globalThis?.document?.documentElement;
+
+    // Reactive update for color scheme
+    $: root?.style.setProperty("color-scheme", colorScheme);
+    
+    // Save color scheme to localStorage whenever it changes
+    $: localStorage.colorScheme = colorScheme;
     let pages = [
       { url: "/my-portfolio/", title: "Home" },
       { url: "./projects", title: "Projects" },

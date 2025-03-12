@@ -122,26 +122,26 @@ function $$ (selector, context = document) {
 // step 4.3
 // TODO: Inside your styles.css file, add styling to move the switcher with class .color-scheme to the top right corner. There is nothing to do in this file in this step
 
-// step 4.4
-let select = document.querySelector("select");
+// // step 4.4
+// let select = document.querySelector("select");
 
-select.addEventListener("input", function (event) {
-	console.log("color scheme changed to", event.target.value);
+// select.addEventListener("input", function (event) {
+// 	console.log("color scheme changed to", event.target.value);
 
-    // TODO: use document.documentElement.style.setProperty to set the color scheme here! (hint: take a look at the handout)
-    document.documentElement.style.setProperty("color-scheme", event.target.value);
+//     // TODO: use document.documentElement.style.setProperty to set the color scheme here! (hint: take a look at the handout)
+//     document.documentElement.style.setProperty("color-scheme", event.target.value);
 
-    // TODO: (step 4.5.1) uncomment the line below!
-    localStorage.colorScheme = event.target.value;
-});
+//     // TODO: (step 4.5.1) uncomment the line below!
+//     localStorage.colorScheme = event.target.value;
+// });
 
 
-// step 4.5 (continued)
-// Reminder: uncomment line inside the event listener for 4.5.1
-if ("colorScheme" in localStorage) {
-    document.documentElement.style.setProperty("color-scheme", localStorage.colorScheme);
-	select.value = localStorage.colorScheme;
-}
+// // step 4.5 (continued)
+// // Reminder: uncomment line inside the event listener for 4.5.1
+// if ("colorScheme" in localStorage) {
+//     document.documentElement.style.setProperty("color-scheme", localStorage.colorScheme);
+// 	select.value = localStorage.colorScheme;
+// }
 
 // STEP 5 (OPTIONAL)
 // Note: This is an optional part of the lab! If you want to do it, uncomment the lines below and fill in the TODOs. Otherwise, leave the lines commented out.
