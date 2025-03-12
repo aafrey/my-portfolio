@@ -4,6 +4,7 @@
 </script>
 
 <article>
+    <!-- Display the project title -->
     <svelte:element this={"h" + hLevel}>{data.title}</svelte:element>
     <img src={data.image} alt="{data.title} project image" /> 
     <p>{data.description}</p>
