@@ -31,14 +31,14 @@
     {/each}
   </nav>
 
-  <label class="color-scheme">
+  <!-- <label class="color-scheme">
 		Theme:
 		<select id="theme-selector">
             <option value="light">Light</option>
             <option value="dark">Dark</option>
             <option value="automatic">Automatic</option>
         </select>
-	</label>
+	</label> -->
 
   <div class="color-scheme">
     <label for="theme-selector">Theme:</label>
