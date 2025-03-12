@@ -2,11 +2,11 @@
     {
         "title": "16.485 Final Project",
         "year": "2024",
-        "image": "/images/16_485_Final_Project.png",
+        "image": "/images/Psyche_FSWU_Paper.png",
         "description": "Vision-enabled, contact-rich trajectory optimization for a hopping/flying, sub-gram, soft-actuated drone"
     },
     {
-        "title": "Planning and Executing Psyche Spacecraft's First Post-Launch Flight Software Update",
+        "title": "Updating Psyche FSW",
         "year": "2021",
         "image": "/images/Psyche_FSWU_Paper.png",
         "description": "Paper being presented at IEEE Aerospace 2025 conference about the first in-flight FSWU for the NASA Psyche mission"
@@ -14,7 +14,7 @@
     {
         "title": "A2: Exploratory Data Analysis",
         "year": "2022",
-        "image": "/images/Img7_AAPIPop_Map.png.png",
+        "image": "/images/Img7_AAPIPop_Map.png",
         "description": "Practiced exploratory data analysis by investigating Boston-area housing data"
     },
     {
