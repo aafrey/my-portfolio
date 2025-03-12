@@ -31,6 +31,15 @@
         </select>
 	</label>
 
+  <div class="color-scheme">
+    <label for="theme-selector">Theme:</label>
+    <select id="theme-selector" bind:value={colorScheme}>
+      <option value="light">Light</option>
+      <option value="dark">Dark</option>
+      <option value="automatic">Automatic</option>
+    </select>
+  </div>
+
   <style>
     .color-scheme {
       position: fixed;
