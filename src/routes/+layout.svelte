@@ -63,29 +63,45 @@
       font-size: 14px;
       border-radius: 5px;
     }
-  </style>
+  .content-wrapper {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
 
-{#await profileData}
-  <p>Loading...</p>
-{:then response}
-  <!-- <p>Decoding...</p> -->
-  <section>
-    <h2>My GitHub Stats</h2>
-    <dl>
-      <dt>Followers:</dt>
-      <dd>{response.followers}</dd>
+  .github-stats {
+    margin-top: auto; /* Pushes the stats to the bottom */
+    padding: 20px;
+    background-color: #f0f0f0;
+  }
+</style>
 
-      <dt>Following:</dt>
-      <dd>{response.following}</dd>
-
-      <dt>Public Repos:</dt>
-      <dd>{response.public_repos}</dd>
-
-      <dt>Public Gists:</dt>
-      <dd>{response.public_gists}</dd>
-    </dl>
-  </section>
-{:catch error}
-  <p class="error">Something went wrong: {error.message}</p>
-{/await}  
+<div class="content-wrapper">
+  <!-- Other content of page goes here -->
   <slot />
+  
+  <!-- GitHub Stats at the bottom -->
+  <section class="github-stats">
+    <h2>My GitHub Stats</h2>
+    {#await fetch("https://api.github.com/users/aafrey")}
+      <p>Loading...</p>
+    {:then response}
+      <p>Decoding...</p>
+      <dl>
+        <dt>Followers:</dt>
+        <dd>{response.followers}</dd>
+
+        <dt>Following:</dt>
+        <dd>{response.following}</dd>
+
+        <dt>Public Repos:</dt>
+        <dd>{response.public_repos}</dd>
+
+        <dt>Public Gists:</dt>
+        <dd>{response.public_gists}</dd>
+      </dl>
+    {:catch error}
+      <p class="error">Something went wrong: {error.message}</p>
+    {/await}
+  </section>
+</div>
