@@ -80,23 +80,23 @@
   <section class="github-stats">
     <h2>My GitHub Stats</h2>
     {#await fetch("https://api.github.com/users/aafrey")}
-      <p>Loading...</p>
-    {:then response}
-      <dl>
-        <dt>Followers:</dt>
-        <dd>{response.followers}</dd>
+    <p>Loading...</p>
+  {:then response}
+    <dl>
+      <dt>Followers:</dt>
+      <dd>{response.followers}</dd>
 
-        <dt>Following:</dt>
-        <dd>{response.following}</dd>
+      <dt>Following:</dt>
+      <dd>{response.following}</dd>
 
-        <dt>Public Repos:</dt>
-        <dd>{response.public_repos}</dd>
+      <dt>Public Repos:</dt>
+      <dd>{response.public_repos}</dd>
 
-        <dt>Public Gists:</dt>
-        <dd>{response.public_gists}</dd>
-      </dl>
-    {:catch error}
-      <p class="error">Something went wrong: {error.message}</p>
-    {/await}
+      <dt>Public Gists:</dt>
+      <dd>{response.public_gists}</dd>
+    </dl>
+  {:catch error}
+    <p class="error">Something went wrong: {error.message}</p>
+  {/await}
   </section>
 </div>
