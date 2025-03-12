@@ -35,14 +35,6 @@
     {/each}
   </nav>
 
-  <!-- <label class="color-scheme">
-		Theme:
-		<select id="theme-selector">
-            <option value="light">Light</option>
-            <option value="dark">Dark</option>
-            <option value="automatic">Automatic</option>
-        </select>
-	</label> -->
 
   <div class="color-scheme">
     <label for="theme-selector">Theme:</label>
@@ -76,7 +68,7 @@
 {#await profileData}
   <p>Loading...</p>
 {:then response}
-  <p>Decoding...</p>
+  <!-- <p>Decoding...</p> -->
   <section>
     <h2>My GitHub Stats</h2>
     <dl>

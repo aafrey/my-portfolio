@@ -173,6 +173,23 @@ a.active {
 }
 
 /* Github data styling */
+.content-wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.github-stats {
+  margin-top: auto; /* Pushes the stats to the bottom */
+  padding: 20px;
+  background-color: #f0f0f0;
+  background-color: #fafafa;
+  padding: 20px;
+  margin-top: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
 h2 {
   font-size: 2rem;
   margin-bottom: 10px;
