@@ -17,10 +17,6 @@
       { url: "./resume", title: "Resume" }, 
       { url: "https://github.mit.edu/aafrey", title: "GitHub" }, 
     ];
-    // Fetch github data
-    let profileData = fetch("https://api.github.com/users/aafrey")
-    .then((response) => response.json())
-    .catch((error) => ({ error: error.message }));
   </script>
   
   <nav>
@@ -86,7 +82,6 @@
     {#await fetch("https://api.github.com/users/aafrey")}
       <p>Loading...</p>
     {:then response}
-      <p>Decoding...</p>
       <dl>
         <dt>Followers:</dt>
         <dd>{response.followers}</dd>
