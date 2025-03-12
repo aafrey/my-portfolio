@@ -171,3 +171,23 @@ a.active {
   color: #1e90ff; /* Highlight color */
   font-weight: bold; /* Optional */
 }
+
+/* Github data styling */
+h2 {
+  font-size: 2rem;
+  margin-bottom: 10px;
+}
+
+dl {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+
+dt {
+  font-weight: bold;
+}
+
+dd {
+  margin-left: 10px;
+}

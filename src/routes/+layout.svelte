@@ -17,6 +17,10 @@
       { url: "./resume", title: "Resume" }, 
       { url: "https://github.mit.edu/aafrey", title: "GitHub" }, 
     ];
+    // Fetch github data
+    let profileData = fetch("https://api.github.com/users/your-username")
+    .then((response) => response.json())
+    .catch((error) => ({ error: error.message }));
   </script>
   
   <nav>
@@ -68,5 +72,28 @@
       border-radius: 5px;
     }
   </style>
-  
+
+{#await profileData}
+  <p>Loading...</p>
+{:then response}
+  <p>Decoding...</p>
+  <section>
+    <h2>My GitHub Stats</h2>
+    <dl>
+      <dt>Followers:</dt>
+      <dd>{response.followers}</dd>
+
+      <dt>Following:</dt>
+      <dd>{response.following}</dd>
+
+      <dt>Public Repos:</dt>
+      <dd>{response.public_repos}</dd>
+
+      <dt>Public Gists:</dt>
+      <dd>{response.public_gists}</dd>
+    </dl>
+  </section>
+{:catch error}
+  <p class="error">Something went wrong: {error.message}</p>
+{/await}  
   <slot />
