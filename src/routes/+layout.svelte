@@ -29,7 +29,7 @@
   {#each pages as p}
     <a
     href={p.url}
-    class:active={"."+$page.url.pathname === p.url}
+    class:active={"."+$page.route.id === p.url}
     target={p.url.startsWith("http") ? "_blank" : null}
     >
       {p.title}
