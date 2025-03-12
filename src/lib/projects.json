@@ -1,21 +1,21 @@
 [
     {
-        "title": "A1: Data, Visualization, and Housing",
-        "year": "2020",
-        "image": "https://vis-society.github.io/labs/2/images/empty.svg",
-        "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquid nisi cumque dolore doloremque facere, fugit sequi, rerum culpa consequatur dolorum perferendis dicta nemo fuga nihil, quisquam quis inventore soluta corporis?"
+        "title": "16.485 Final Project",
+        "year": "2024",
+        "image": "../../static/images/16_485_Final_Project.png",
+        "description": "Vision-enabled, contact-rich trajectory optimization for a hopping/flying, sub-gram, soft-actuated drone"
     },
     {
-        "title": "Harum praesentium enim alias?",
+        "title": "Planning and Executing Psyche Spacecraft's First Post-Launch Flight Software Update",
         "year": "2021",
-        "image": "https://vis-society.github.io/labs/2/images/empty.svg",
-        "description": "Maiores, quibusdam et facere asperiores nam natus illum reiciendis suscipit tempora numquam, illo accusantium voluptates. Numquam dolores maxime vero ullam sit iusto officiis repellendus tempore molestiae, nulla, rem ipsam eos."
+        "image": "../../static/images/Psyche_FSWU_Paper.png",
+        "description": "Paper being presented at IEEE Aerospace 2025 conference about the first in-flight FSWU for the NASA Psyche mission"
     },
     {
-        "title": "Animi ullam pariatur tempora!",
+        "title": "A2: Exploratory Data Analysis",
         "year": "2022",
-        "image": "https://vis-society.github.io/labs/2/images/empty.svg",
-        "description": "Esse a provident quos cum eveniet? Voluptatibus unde excepturi quia rerum sint quisquam sit reiciendis ex dolore? Ex fugit, quo mollitia inventore perspiciatis perferendis, repellendus aspernatur tenetur hic unde iure."
+        "image": "../../static/images/Img7_AAPIPop_Map.png.png",
+        "description": "Practiced exploratory data analysis by investigating Boston-area housing data"
     },
     {
         "title": "Delectus incidunt ratione reprehenderit.",
