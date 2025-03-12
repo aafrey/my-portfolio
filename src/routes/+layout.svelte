@@ -12,10 +12,10 @@
   $: localStorage.colorScheme = colorScheme;
 
   let pages = [
-  { url: "/", title: "Home" },  // Will resolve correctly based on the base path
-  { url: "/projects", title: "Projects" },
-  { url: "/contact", title: "Contact" },
-  { url: "/resume", title: "Resume" },
+  { url: "./", title: "Home" },  // Will resolve correctly based on the base path
+  { url: "./projects", title: "Projects" },
+  { url: "./contact", title: "Contact" },
+  { url: "./resume", title: "Resume" },
   { url: "https://github.mit.edu/aafrey", title: "GitHub" }
 ];
 
