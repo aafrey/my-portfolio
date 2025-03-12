@@ -165,3 +165,9 @@ h4 {
 }
 
 }
+
+/* highlight current page in nav */
+a.active {
+  color: #1e90ff; /* Highlight color */
+  font-weight: bold; /* Optional */
+}
