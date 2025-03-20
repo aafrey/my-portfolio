@@ -7,6 +7,6 @@
 <h1> Projects</h1>
 <div class="projects">
     {#each projects as p}
-    <Project {p} />
+    <Project data={p} />
     {/each}
 </div>
