@@ -6,8 +6,15 @@
 <article>
     <!-- Display the project title -->
     <svelte:element this={"h" + hLevel}>{data.title}</svelte:element>
+    <!-- Display the project image -->
     <img src={data.image} alt="{data.title} project image" /> 
-    <p>{data.description}</p>
+    <!-- Wrap description and year in a div for styling -->
+    <div class="project-info">
+        <p>{data.description}</p>
+        {#if data.year}
+            <p class="project-year">c. {data.year}</p>
+        {/if}
+    </div>
 </article>
 
 <style>
