@@ -3,6 +3,8 @@
 
     import { onMount } from "svelte";
 
+    import Bar from '$lib/Bar.svelte';
+
     import {
 	computePosition,
 	autoPlacement,
@@ -145,6 +147,23 @@
             }
         }
     }
+
+    // Set up bar chart
+    // Create set for programming languages in project
+    $: allTypes = Array.from(new Set(data.map(d => d.type)));
+
+    // Choose which commits to include
+    $: selectedLines = (clickedCommits.length > 0 ? clickedCommits : commits).flatMap(d => d.lines);
+
+    // Aggregate all LOCs for each language
+    $: selectedCounts = d3.rollup(
+    selectedLines,
+    v => v.length,
+    d => d.type
+    );
+
+    // Ensure all languages are included
+    $: languageBreakdown = allTypes.map(type => [type, selectedCounts.get(type) || 0]);
 </script>
 
 <h1>
@@ -175,6 +194,8 @@
         {/each}
         </g>
 </svg>
+
+<Bar data={languageBreakdown} width={width} />
 
 <dl 
     class="info tooltip" 
