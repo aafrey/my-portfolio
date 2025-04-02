@@ -69,7 +69,7 @@
     }
 
     onMount(async () => {
-        data = await d3.csv("${base}/loc.csv", row => ({
+        data = await d3.csv(`${base}/loc.csv`, row => ({
             ...row,
             line: Number(row.line),
             depth: Number(row.depth),
