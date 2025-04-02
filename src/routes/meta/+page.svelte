@@ -12,9 +12,10 @@
     let data = [];
     let commits = [];
     let uniqueFiles = new Set();
+    let clickedCommits = [];
 
     //Set circle size for commits
-    $: rScale = d3.scaleLinear()
+    $: rScale = d3.scaleSqrt()
         .domain(d3.extent(commits, d => d.totalLines)) // [min, max]
         .range([2, 30]); // <- min and max radius
 
@@ -118,20 +119,32 @@
                         .range([usableArea.bottom, usableArea.top]);
 
     async function dotInteraction (index, evt) {
-	let hoveredDot = evt.target;
-	if (evt.type === "mouseenter") {
-		hoveredIndex = index;
-		tooltipPosition = await computePosition(hoveredDot, commitTooltip, {
-			strategy: "fixed", // because we use position: fixed
-			middleware: [
-				offset(5), // spacing from tooltip to dot
-				autoPlacement() // see https://floating-ui.com/docs/autoplacement
-			],
-		});        }
-	else if (evt.type === "mouseleave") {
-		hoveredIndex = -1
-	}
-}
+        let hoveredDot = evt.target;
+        if (evt.type === "mouseenter") {
+            hoveredIndex = index;
+            tooltipPosition = await computePosition(hoveredDot, commitTooltip, {
+                strategy: "fixed", // because we use position: fixed
+                middleware: [
+                    offset(5), // spacing from tooltip to dot
+                    autoPlacement() // see https://floating-ui.com/docs/autoplacement
+                ],
+            });        }
+        else if (evt.type === "mouseleave") {
+            hoveredIndex = -1
+        }
+        else if (evt.type === "click") {
+            console.log(clickedCommits);
+            let commit = commits[index]
+            if (!clickedCommits.includes(commit)) {
+                // Add the commit to the clickedCommits array
+                clickedCommits = [...clickedCommits, commit];
+            }
+            else {
+                    // Remove the commit from the array
+                    clickedCommits = clickedCommits.filter(c => c !== commit);
+            }
+        }
+    }
 </script>
 
 <h1>
@@ -149,6 +162,8 @@
     <g class="dots">
         {#each commits as commit, index}
             <circle
+                class:selected={ clickedCommits.includes(commit) }
+                on:click={ evt => dotInteraction(index, evt) }
                 on:mouseenter={evt => dotInteraction(index, evt)}
                 on:mouseleave={evt => dotInteraction(index, evt)}
                 cx={ xScale(commit.date) }

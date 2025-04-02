@@ -252,3 +252,8 @@ svg {
   height: auto;
   overflow: visible;
 }
+
+/*Add styling for selected commit!*/
+.selected {
+  fill: var(--color-accent);
+}
