@@ -1,6 +1,9 @@
 <script>
     import * as d3 from "d3";
 
+    // Adding fix to render on github pages
+    import { base } from '$app/paths';
+
     import { onMount } from "svelte";
 
     import Bar from '$lib/Bar.svelte';
@@ -66,7 +69,7 @@
     }
 
     onMount(async () => {
-        data = await d3.csv("/loc.csv", row => ({
+        data = await d3.csv("${base}/loc.csv", row => ({
             ...row,
             line: Number(row.line),
             depth: Number(row.depth),
