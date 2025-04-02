@@ -16,6 +16,7 @@
   { url: "./projects", title: "Projects" },
   { url: "./contact", title: "Contact" },
   { url: "./resume", title: "Resume" },
+  { url: "./meta", title: "Meta" },
   { url: "https://github.mit.edu/aafrey", title: "GitHub" }
 ];
 
@@ -49,30 +50,6 @@
 <div class="content-wrapper">
   <!-- Other content of page goes here -->
   <slot />
-  
-  <!-- GitHub Stats at the bottom -->
-  <section class="github-stats">
-    <h2>My GitHub Stats</h2>
-    {#await githubStats}
-      <p>Loading...</p>
-    {:then response}
-      <dl>
-        <dt>Followers:</dt>
-        <dd>{response.followers}</dd>
-
-        <dt>Following:</dt>
-        <dd>{response.following}</dd>
-
-        <dt>Public Repos:</dt>
-        <dd>{response.public_repos}</dd>
-
-        <dt>Public Gists:</dt>
-        <dd>{response.public_gists}</dd>
-      </dl>
-    {:catch error}
-      <p class="error">Something went wrong: {error.message}</p>
-    {/await}
-  </section>
 </div>
 
 <style>

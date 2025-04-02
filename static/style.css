@@ -179,7 +179,7 @@ a.active {
   min-height: 100vh;
 }
 
-.github-stats {
+.stats {
   margin-top: auto; /* Pushes the stats to the bottom */
   padding: 20px;
   background-color: #f0f0f0;
@@ -207,4 +207,48 @@ dt {
 
 dd {
   margin-left: 10px;
+}
+/* Add styling for grid lines */
+.gridlines {
+  stroke-opacity: .2;
+}
+
+dl.info {
+  /* TODO */
+  display: grid;
+  transition-duration: 250ms;
+	transition-property: opacity, visibility;
+
+	&[hidden]:not(:hover, :focus-within) {
+		opacity: 0;
+		visibility: hidden;
+	}
+}
+
+.tooltip {
+  /* TODO */
+  position: fixed;
+  top: 1em;
+  left: 1em;
+  background: lightskyblue;
+  box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+  padding: 0.5em;
+  border-radius: 5px;
+}
+
+/* Add hover style to dots */
+circle {
+  transition: 200ms;
+
+  &:hover {
+    transform: scale(1.5);
+  }
+  transform-origin: center;
+  transform-box: fill-box;
+}
+
+svg {
+  width: 100%;
+  height: auto;
+  overflow: visible;
 }
