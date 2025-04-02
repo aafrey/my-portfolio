@@ -52,6 +52,7 @@
         <ul>
             {#each arcs as arc, index}
                 <li 
+                    style="--color: { colors(index) }"
                     class="{selectedIndex === index ? 'selected' : ''}" 
                     on:click={() => {selectedIndex = selectedIndex === index ? -1 : index
                         selectedYear = selectedIndex !== null ? arc.label : null; // Update year filtering
@@ -61,9 +62,9 @@
                         style="background-color: {selectedIndex === index ? '#ff1493' : arc.color};">
                     </span>
                     <span 
-    style="color: {selectedIndex === index ? '#ff1493' : 'var(--text-color, white)'};">
-    {arc.label}: {arc.value}
-</span>
+                        style="color: {selectedIndex === index ? '#ff1493' : 'var(--text-color, black)'};">
+                        {arc.label}: {arc.value}
+                    </span>
                 </li>
             {/each}
         </ul>
@@ -86,8 +87,7 @@
         height: auto;
         flex-shrink: 0;
     }
-
-
+    
     /* Light Mode */
     @media (prefers-color-scheme: light) {
         .legend {
@@ -150,11 +150,6 @@
         font-weight: bold;
     }
 
-    /* Fade out unselected legend items */
-    .legend li:not(.selected) span {
-        opacity: 0.5;
-    }
-
     @media (max-width: 600px) {
         .container {
             flex-direction: column;
@@ -172,11 +167,11 @@ ul:has(.selected) li:not(.selected) {
 }
 
 /* Highlight the selected legend item */
-.legend li.selected {
+/* .legend li.selected {
     font-weight: bold;
     color: var(--selected-color, black);
     background-color: var(--bg-selected, lightgray);
-}
+} */
 
     /* Make responsive */
     @media (max-width: 600px) {
@@ -220,9 +215,5 @@ ul:has(.selected) li:not(.selected) {
         &:is(li) {
             color: var(--color);
         }
-    }
-
-    ul:has(.selected) li:not(.selected) {
-        color: gray;
     }
 </style>
