@@ -78,7 +78,7 @@
         data.forEach((row) => {
             uniqueFiles.add(row.file)
         });
-
+        // commits = d3.sort(commits, d => -d.totalLines);
         commits = d3.groups(data, d => d.commit).map(([commit, lines]) => {
             let first = lines[0];
             let {author, date, time, timezone, datetime} = first;
