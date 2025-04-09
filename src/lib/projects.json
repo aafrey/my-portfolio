@@ -6,6 +6,12 @@
         "description": "Vision-enabled, contact-rich trajectory optimization for a hopping/flying, sub-gram, soft-actuated drone"
     },
     {
+        "title": "Bike Data Visualization",
+        "year": "2025",
+        "image": "./images/BikeWatch.png",
+        "description": "Interactive visualization of bike data from the Boston area."
+    },
+    {
         "title": "Updating Psyche Flight Software",
         "year": "2021",
         "image": "./images/Psyche_FSWU_Paper.png",
