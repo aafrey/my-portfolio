@@ -114,6 +114,15 @@
     $: maxDate = d3.max(commits.map(d => d.date));
     $: maxDatePlusOne = new Date(maxDate);
     $: maxDatePlusOne.setDate(maxDatePlusOne.getDate() + 1);
+
+    /* Commit filtering */
+    let commitProgress = 100;
+    $: timeScale = d3.scaleTime()
+        .domain([minDate, maxDate])
+        .range([0, 100]);
+    $: commitMaxTime = timeScale.invert(commitProgress);
+    $: filteredCommits = commits.filter(commit => commit.datetime <= commitMaxTime)
+
     $: xScale = d3.scaleTime()
                         .domain([minDate, maxDatePlusOne])
                         .range([usableArea.left, usableArea.right])
@@ -167,6 +176,7 @@
 
     // Ensure all languages are included
     $: languageBreakdown = allTypes.map(type => [type, selectedCounts.get(type) || 0]);
+
 </script>
 
 <h1>
@@ -235,10 +245,60 @@
     <dd>{maxPeriod}</dd>
 </dl>
 
+<div class="slider-container">
+    <div class="slider-row">
+        <label for="time-range">Show commits until: </label>
+        <input 
+            type="range" 
+            id="date-range" 
+            min="0" 
+            max= {data.length}
+            bind:value={commitProgress}
+            step="1" 
+        />
+    </div> 
+    <time>
+        {#if data.length}
+            {new Date(data[commitProgress].datetime).toLocaleString("en", {
+            dateStyle: "long",
+            timeStyle: "short"
+            })}
+        {/if}
+        </time>
+
+</div>
+
 <style>
     svg {
         overflow: visible;
     }
+    .slider-container {
+    display: flex;
+    flex-direction: column;
+    max-width: 600px;
+    gap: 0.5rem;
+    }
+
+    .slider-row {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    }
+
+    .slider-row label {
+    font-weight: bold;
+    white-space: nowrap;
+    }
+
+    .slider-row input[type="range"] {
+    flex: 1;
+    }
+
+    .slider-container time {
+    font-size: 0.9rem;
+    white-space: nowrap;
+    }
+
 </style>
 
 
