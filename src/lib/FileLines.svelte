@@ -3,6 +3,7 @@
 
     export let lines = [];
     export let width = 400;
+    export let svgWidth = 1200;
     let previousDotCounts = new Map();
 
     let svg;
@@ -16,15 +17,14 @@
     const firstColumnWidth = 150;
     const fileInfoMargin = 120;
     const dotsColumnX = firstColumnWidth + fileInfoMargin;
-    const approxDotWidth = 20;
+    const approxDotWidth = 18;
+    const dotRowHeight = 18;
     const linesPerDot = 1;
     const baseY = 10;
     const totalLinesOffset = 20;
     const fileInfoHeight = baseY + totalLinesOffset;
-    const dotRowHeight = 24;
 
     $: if (svg) {
-        const svgWidth = 1200;
         const totalHeight = positions.length
             ? positions[positions.length - 1] + filesWithHeights[filesWithHeights.length - 1].groupHeight
             : 0;
@@ -67,17 +67,6 @@
             .attr('fill', "#1f77b4")
             .html(d => generateDots(d, svgWidth));
         
-        // groups.attr('transform', (d, i) => `translate(0, ${positions[i]})`)
-        //     .select('text.filename')
-        //     .text(d => d.name);
-        //     .duration(function(d, i) {
-        //         const currentTransform = this.getAttribute("transform") || "translate(0,0)";
-        //         const match = currentTransform.match(/translate\(\s*0\s*,\s*([0-9.]+)\s*\)/);
-        //         const oldY = match ? +match[1] : 0;
-        //         const newY = positions[i];
-        //         const distance = Math.abs(newY - oldY);
-        //         return distance * 2;
-        //     })
         groups.transition()
             .duration(function(d, i) {
                 const currentTransform = this.getAttribute("transform") || "translate(0,0)";
@@ -108,6 +97,7 @@
 
             // Re-render all dots
             unitDotsSel.html(generateDots(d, width));
+            console.log("width", width);
 
             if (newCount > oldCount) {
                 unitDotsSel
@@ -137,12 +127,19 @@
             const rowLines = file.lines.slice(r * maxDotsPerRow, (r + 1) * maxDotsPerRow);
             // const rowDots = rowLines.map(line => `<tspan class="dot" style="fill:${colorScale(line.type)}">•</tspan>`)
             //     .join('');
+            // const rowDots = rowLines.map(line => {
+            //     const span = `<tspan class="dot" data-index="${dotIndex}" style="fill:${colorScale(line.type)}">•</tspan>`;
+            //     dotIndex += 1;
+            //     return span;
+            // }).join('');
             const rowDots = rowLines.map(line => {
-                const span = `<tspan class="dot" data-index="${dotIndex}" style="fill:${colorScale(line.type)}">•</tspan>`;
+                const span = `<tspan class="dot" data-index="${dotIndex}" style="fill:${colorScale(line.type)}; font-family:SFMono-Regular,Consolas,'Liberation Mono',Menlo,Courier,monospace">•</tspan>`;
                 dotIndex += 1;
                 return span;
             }).join('');
-            tspans += `<tspan x="${dotsColumnX}" dy="${r === 0 ? 0 : dotRowHeight + 'px'}">${rowDots}</tspan>`;
+            // tspans += `<tspan x="${dotsColumnX}" dy="${r === 0 ? 0 : dotRowHeight + 'px'}">${rowDots}</tspan>`;
+            tspans += `<tspan x="${dotsColumnX}" dy="${r === 0 ? 0 : dotRowHeight}">${rowDots}</tspan>`;
+
         }
         return tspans;
     }
@@ -166,7 +163,8 @@
 
 </script>
 
-<svg bind:this={svg}></svg>
+<!-- <svg bind:this={svg}></svg> -->
+<svg bind:this={svg} width={svgWidth}></svg>
 
 <style>
     :global(text.filename) {
@@ -180,8 +178,15 @@
         font-style: italic;
     }
 
+    /* :global(text.unit-dots) {
+        font-size: 1.5rem;       
+        font-family: monospace;
+        dominant-baseline: middle;
+    } */
+
     :global(text.unit-dots) {
-        font-size: 2.0rem;
+        font-size: 1.5rem;
+        font-family: SFMono-Regular, Consolas, "Liberation Mono", Menlo, Courier, monospace;
         dominant-baseline: middle;
     }
 

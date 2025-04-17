@@ -4,6 +4,7 @@
 
     import Scrolly from "svelte-scrolly";
     let scrollyProgress = 0;
+    let raceProgress = 0;
 
     // Adding fix to render on github pages
     import { base } from '$app/paths';
@@ -115,8 +116,6 @@
     $: maxPeriod = d3.greatest(workByPeriod, (d) => d[1])?.[0];
 
     // Define scales for X and Y axes
-    // $: minDate = d3.min(commits.map(d => d.date));
-    // $: maxDate = d3.max(commits.map(d => d.date));
     $: minDate = d3.min(commits, d => d.date);
     $: maxDate = d3.max(commits, d => d.date);
     $: maxDatePlusOne = new Date(maxDate);
@@ -196,74 +195,71 @@
     This page includes statistics about my GitHub.
 </p>
 
-<svg viewBox="0 0 {width} {height}">
-    Add gridlines!
-    <g class="gridlines" transform="translate({usableArea.left}, 0)" bind:this={yAxisGridlines} />
-    <g transform="translate(0, {usableArea.bottom})" bind:this={xAxis} />
-    <g transform="translate({usableArea.left}, 0)" bind:this={yAxis} /> 
-    <g class="dots">
-        {#each filteredCommits as commit, index (commit.id) }
-            <circle
-                class:selected={ clickedCommits.includes(commit) }
-                on:click={ evt => dotInteraction(index, evt) }
-                on:mouseenter={evt => dotInteraction(index, evt)}
-                on:mouseleave={evt => dotInteraction(index, evt)}
-                cx={ xScale(commit.date) }
-                cy={ yScale(commit.hourFrac) }
-                r={ rScale(commit.totalLines) }
-                fill="steelblue"
-                fill-opacity={hoveredIndex === index ? 1 : 0.6}
-                />
-        {/each}
-        </g>
-</svg>
-
-<!-- <StackedBar data={languageBreakdown} width={width} /> -->
-<Scrolly bind:progress={scrollyProgress}>
-    <!-- Story blocks go here -->
-    <div>
-      <p><strong>How did we build this project?</strong></p>
-      <p>Let’s walk through our development process using real data from our repository.</p>
-    </div>
-  
-    <div>
-      <p><strong>Major CSS refactor</strong></p>
-      <p>In this commit, over 250 lines of <code>css</code> were changed—likely for a visual overhaul.</p>
-    </div>
-  
-    <div>
-      <p><strong>Final polish</strong></p>
-      <p>Smaller, balanced commits reflect cleanup before the final push.</p>
-    </div>
+<Scrolly bind:progress={commitProgress}>
+    <!-- Narrative block -->
+    {#each commits as commit, index }
+        <p>
+            On {commit.datetime.toLocaleString("en", {dateStyle: "full", timeStyle: "short"})},
+            {index === 0 
+                ? "I set forth on my very first commit, beginning a magical journey of code. You can view it "
+                : "I added another enchanted commit, each line sparkling with a touch of wonder. See it "}
+            <a href="{commit.url}" target="_blank">
+                {index === 0 ? "here" : "here"}
+            </a>.
+            This update transformed {commit.totalLines} lines across { d3.rollups(commit.lines, D => D.length, d => d.file).length } files.
+            With every commit, our project grows into a kingdom of dreams.
+        </p>
+    {/each}
   
     <!-- Visualization slot -->
     <svelte:fragment slot="viz">
+        <svg viewBox="0 0 {width} {height}">
+            Add gridlines!
+            <g class="gridlines" transform="translate({usableArea.left}, 0)" bind:this={yAxisGridlines} />
+            <g transform="translate(0, {usableArea.bottom})" bind:this={xAxis} />
+            <g transform="translate({usableArea.left}, 0)" bind:this={yAxis} /> 
+            <g class="dots">
+                {#each filteredCommits as commit, index (commit.id) }
+                    <circle
+                        class:selected={ clickedCommits.includes(commit) }
+                        on:click={ evt => dotInteraction(index, evt) }
+                        on:mouseenter={evt => dotInteraction(index, evt)}
+                        on:mouseleave={evt => dotInteraction(index, evt)}
+                        cx={ xScale(commit.date) }
+                        cy={ yScale(commit.hourFrac) }
+                        r={ rScale(commit.totalLines) }
+                        fill="steelblue"
+                        fill-opacity={hoveredIndex === index ? 1 : 0.6}
+                        />
+                {/each}
+                </g>
+        </svg>
       <StackedBar data={languageBreakdown} width={width} />
     </svelte:fragment>
-  </Scrolly>
-<!-- <div class="slider-container">
-    <div class="slider-row">
-        <label for="time-range">Show commits until: </label>
-        <input 
-            type="range" 
-            id="date-range" 
-            min="0"
-            max= {100}
-            bind:value={commitProgress}
-            step="1" 
-        />
-    </div> 
-    <time>
-        {#if data.length}
-            {commitMaxTime?.toLocaleString("en", {
-                dateStyle: "long",
-                timeStyle: "short"
-            })}
-        {/if}
-        </time>
+</Scrolly>
+<!-- <FileLines lines={filteredLines} svgWidth={0.8 * width} /> -->
 
-</div> -->
-<FileLines lines={filteredLines} width={width} />
+<Scrolly bind:progress={commitProgress} --scrolly-layout="viz-first" --scrolly-viz-width="3fr">
+    <!-- Narrative Block -->
+    {#each commits as commit, index }
+        <p>
+            On {commit.datetime.toLocaleString("en", {dateStyle: "full", timeStyle: "short"})},
+            {index === 0 
+                ? "I set forth on my very first commit, beginning a magical journey of code. You can view it "
+                : "I added another enchanted commit, each line sparkling with a touch of wonder. See it "}
+            <a href="{commit.url}" target="_blank">
+                {index === 0 ? "here" : "here"}
+            </a>.
+            This update transformed {commit.totalLines} lines across { d3.rollups(commit.lines, D => D.length, d => d.file).length } files.
+            With every commit, our project grows into a kingdom of dreams.
+        </p>
+    {/each}
+  
+    <!-- Visualization -->
+    <svelte:fragment slot="viz">
+      <FileLines lines={filteredLines} svgWidth={0.8 * width} />
+    </svelte:fragment>
+  </Scrolly>
 
 <dl 
     class="info tooltip" 
