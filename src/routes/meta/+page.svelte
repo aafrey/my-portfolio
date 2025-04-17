@@ -1,12 +1,17 @@
 <script>
     import * as d3 from "d3";
+    import FileLines from '$lib/FileLines.svelte';
+
+    import Scrolly from "svelte-scrolly";
+    let scrollyProgress = 0;
 
     // Adding fix to render on github pages
     import { base } from '$app/paths';
 
     import { onMount } from "svelte";
 
-    import Bar from '$lib/Bar.svelte';
+    // import Bar from '$lib/Bar.svelte';
+    import StackedBar from '$lib/StackedBar.svelte';
 
     import {
 	computePosition,
@@ -34,7 +39,7 @@
 
     // Add info for tooltip
     let hoveredIndex = -1;
-    $: hoveredCommit = hoveredIndex >= 0 ? commits[hoveredIndex] : {};
+    $: hoveredCommit = hoveredIndex >= 0 ? filteredCommits[hoveredIndex] : {};
 
     // Define width and height for plot
     let width = 1000, height = 600;
@@ -110,8 +115,10 @@
     $: maxPeriod = d3.greatest(workByPeriod, (d) => d[1])?.[0];
 
     // Define scales for X and Y axes
-    $: minDate = d3.min(commits.map(d => d.date));
-    $: maxDate = d3.max(commits.map(d => d.date));
+    // $: minDate = d3.min(commits.map(d => d.date));
+    // $: maxDate = d3.max(commits.map(d => d.date));
+    $: minDate = d3.min(commits, d => d.date);
+    $: maxDate = d3.max(commits, d => d.date);
     $: maxDatePlusOne = new Date(maxDate);
     $: maxDatePlusOne.setDate(maxDatePlusOne.getDate() + 1);
 
@@ -119,15 +126,17 @@
     let commitProgress = 100;
     $: timeScale = d3.scaleTime()
         .domain([minDate, maxDate])
-        .range([0, 100]);
+        .range([0, 100])
     $: commitMaxTime = timeScale.invert(commitProgress);
     $: filteredCommits = commits.filter(commit => commit.datetime <= commitMaxTime)
+    $: filteredLines = data.filter((line) => line.datetime <= commitMaxTime);
+
 
     $: xScale = d3.scaleTime()
-                        .domain([minDate, maxDatePlusOne])
+                        .domain(d3.extent(filteredCommits.map(d => d.date)))
                         .range([usableArea.left, usableArea.right])
                         .nice();
-
+    
     $: yScale = d3.scaleLinear()
                         .domain([24,0])
                         .range([usableArea.bottom, usableArea.top]);
@@ -148,7 +157,7 @@
         }
         else if (evt.type === "click") {
             console.log(clickedCommits);
-            let commit = commits[index]
+            let commit = filteredCommits[index]
             if (!clickedCommits.includes(commit)) {
                 // Add the commit to the clickedCommits array
                 clickedCommits = [...clickedCommits, commit];
@@ -165,7 +174,7 @@
     $: allTypes = Array.from(new Set(data.map(d => d.type)));
 
     // Choose which commits to include
-    $: selectedLines = (clickedCommits.length > 0 ? clickedCommits : commits).flatMap(d => d.lines);
+    $: selectedLines = (clickedCommits.length > 0 ? clickedCommits : filteredCommits).flatMap(d => d.lines);
 
     // Aggregate all LOCs for each language
     $: selectedCounts = d3.rollup(
@@ -186,13 +195,14 @@
 <p>
     This page includes statistics about my GitHub.
 </p>
+
 <svg viewBox="0 0 {width} {height}">
     Add gridlines!
     <g class="gridlines" transform="translate({usableArea.left}, 0)" bind:this={yAxisGridlines} />
     <g transform="translate(0, {usableArea.bottom})" bind:this={xAxis} />
     <g transform="translate({usableArea.left}, 0)" bind:this={yAxis} /> 
     <g class="dots">
-        {#each commits as commit, index}
+        {#each filteredCommits as commit, index (commit.id) }
             <circle
                 class:selected={ clickedCommits.includes(commit) }
                 on:click={ evt => dotInteraction(index, evt) }
@@ -208,7 +218,52 @@
         </g>
 </svg>
 
-<Bar data={languageBreakdown} width={width} />
+<!-- <StackedBar data={languageBreakdown} width={width} /> -->
+<Scrolly bind:progress={scrollyProgress}>
+    <!-- Story blocks go here -->
+    <div>
+      <p><strong>How did we build this project?</strong></p>
+      <p>Let’s walk through our development process using real data from our repository.</p>
+    </div>
+  
+    <div>
+      <p><strong>Major CSS refactor</strong></p>
+      <p>In this commit, over 250 lines of <code>css</code> were changed—likely for a visual overhaul.</p>
+    </div>
+  
+    <div>
+      <p><strong>Final polish</strong></p>
+      <p>Smaller, balanced commits reflect cleanup before the final push.</p>
+    </div>
+  
+    <!-- Visualization slot -->
+    <svelte:fragment slot="viz">
+      <StackedBar data={languageBreakdown} width={width} />
+    </svelte:fragment>
+  </Scrolly>
+<!-- <div class="slider-container">
+    <div class="slider-row">
+        <label for="time-range">Show commits until: </label>
+        <input 
+            type="range" 
+            id="date-range" 
+            min="0"
+            max= {100}
+            bind:value={commitProgress}
+            step="1" 
+        />
+    </div> 
+    <time>
+        {#if data.length}
+            {commitMaxTime?.toLocaleString("en", {
+                dateStyle: "long",
+                timeStyle: "short"
+            })}
+        {/if}
+        </time>
+
+</div> -->
+<FileLines lines={filteredLines} width={width} />
 
 <dl 
     class="info tooltip" 
@@ -236,7 +291,7 @@
     <dt>Total <abbr title="Lines of code">LOC</abbr></dt>
     <dd>{data.length}</dd>
     <dt>Number of Commits</dt>
-    <dd>{commits.length}</dd>
+    <dd>{filteredCommits.length}</dd>
     {#key data}
     <dt>Number of Files</dt>
     <dd>{uniqueFiles.size}</dd>
@@ -245,30 +300,10 @@
     <dd>{maxPeriod}</dd>
 </dl>
 
-<div class="slider-container">
-    <div class="slider-row">
-        <label for="time-range">Show commits until: </label>
-        <input 
-            type="range" 
-            id="date-range" 
-            min="0" 
-            max= {data.length}
-            bind:value={commitProgress}
-            step="1" 
-        />
-    </div> 
-    <time>
-        {#if data.length}
-            {new Date(data[commitProgress].datetime).toLocaleString("en", {
-            dateStyle: "long",
-            timeStyle: "short"
-            })}
-        {/if}
-        </time>
-
-</div>
-
 <style>
+    :global(body) {
+        max-width: min(120ch, 80vw);
+    }
     svg {
         overflow: visible;
     }
@@ -297,6 +332,10 @@
     .slider-container time {
     font-size: 0.9rem;
     white-space: nowrap;
+    }
+
+    @starting-style {
+        r: 0;
     }
 
 </style>
