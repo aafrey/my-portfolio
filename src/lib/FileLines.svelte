@@ -186,7 +186,7 @@
     } */
 
     :global(text.unit-dots) {
-        font-size: 1.0rem;
+        font-size: 0.8rem;
         font-family: SFMono-Regular, Consolas, "Liberation Mono", Menlo, Courier, monospace;
         dominant-baseline: middle;
         line-height: 1.9;
