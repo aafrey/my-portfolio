@@ -25,6 +25,15 @@
     let uniqueFiles = new Set();
     let clickedCommits = [];
 
+    let spacerEl;
+
+    // After filteredLines are updated, calculate an appropriate spacer
+    $: if (spacerEl && filteredLines.length > 0) {
+        // Estimate how tall the dot chart might be (adjust the multiplier if needed)
+        const estimatedDotHeight = Math.ceil(filteredLines.length / 50) * 10; // assuming ~50 dots per row
+        spacerEl.style.height = `${estimatedDotHeight}px`;
+    }
+
     //Set circle size for commits
     $: rScale = d3.scaleSqrt()
         .domain(d3.extent(commits, d => d.totalLines)) // [min, max]
@@ -287,7 +296,7 @@
 </dl>
 
 <!-- Invisible spacer to push the stats down -->
-<div style="height: 15rem;"></div>
+<div bind:this={spacerEl} style="height: 0px;"></div>
 
 <dl class="stats">
     <dt>Total <abbr title="Lines of code">LOC</abbr></dt>
