@@ -360,6 +360,10 @@
         }
     }
 
+    :global(body) {
+        padding-bottom: 5rem; /* or 6rem if you want even more space */
+    }
+
 </style>
 
 

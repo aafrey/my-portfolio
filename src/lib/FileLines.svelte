@@ -25,8 +25,9 @@
     const fileInfoHeight = baseY + totalLinesOffset;
 
     $: if (svg) {
+        const paddingBottom = 80;
         const totalHeight = positions.length
-            ? positions[positions.length - 1] + filesWithHeights[filesWithHeights.length - 1].groupHeight
+            ? positions[positions.length - 1] + filesWithHeights[filesWithHeights.length - 1].groupHeight + paddingBottom
             : 0;
         d3.select(svg)
             .attr('width', svgWidth)
