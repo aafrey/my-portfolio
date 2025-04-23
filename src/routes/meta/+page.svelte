@@ -286,6 +286,9 @@
     <dd>{ hoveredCommit.totalLines}</dd>
 </dl>
 
+<!-- Invisible spacer to push the stats down -->
+<div style="height: 15rem;"></div>
+
 <dl class="stats">
     <dt>Total <abbr title="Lines of code">LOC</abbr></dt>
     <dd>{data.length}</dd>
@@ -354,15 +357,19 @@
         overflow-x: auto;
     }
 
-    @media (max-width: 800px) {
+    /* @media (max-width: 800px) {
         .filelines-scrolly {
             grid-template-columns: 1fr;
         }
-    }
+    } */
 
     :global(body) {
         padding-bottom: 5rem; /* or 6rem if you want even more space */
     }
+
+    /* .stats {
+        padding-top: 8rem; 
+    } */
 
 </style>
 
