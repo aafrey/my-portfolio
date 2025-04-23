@@ -2,7 +2,7 @@
     import * as d3 from "d3";
 
     export let lines = [];
-    export let width = 400;
+    export let width = 1200;
     export let svgWidth = 1200;
     let previousDotCounts = new Map();
 
@@ -18,9 +18,9 @@
     const fileInfoMargin = 120;
     const dotsColumnX = firstColumnWidth + fileInfoMargin;
     const approxDotWidth = 18;
-    const dotRowHeight = 18;
+    const dotRowHeight = 10;
     const linesPerDot = 1;
-    const baseY = 10;
+    const baseY = 15;
     const totalLinesOffset = 20;
     const fileInfoHeight = baseY + totalLinesOffset;
 
@@ -89,6 +89,7 @@
             .html(d => generateDots(d, svgWidth))
             .attr('x', dotsColumnX)
             .attr('fill', "#1f77b4");
+
         groups.each(function (d) {
             const groupSel = d3.select(this);
             const unitDotsSel = groupSel.select('text.unit-dots');
@@ -96,7 +97,7 @@
             const oldCount = previousDotCounts.get(d.name) || 0;
 
             // Re-render all dots
-            unitDotsSel.html(generateDots(d, width));
+            unitDotsSel.html(generateDots(d, svgWidth));
             console.log("width", width);
 
             if (newCount > oldCount) {
@@ -188,6 +189,7 @@
         font-size: 1.5rem;
         font-family: SFMono-Regular, Consolas, "Liberation Mono", Menlo, Courier, monospace;
         dominant-baseline: middle;
+        line-height: 1.9;
     }
 
     :global(tspan.dot) {
