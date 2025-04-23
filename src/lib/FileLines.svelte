@@ -20,7 +20,7 @@
     const approxDotWidth = 18;
     const dotRowHeight = 10;
     const linesPerDot = 1;
-    const baseY = 15;
+    const baseY = 20;
     const totalLinesOffset = 20;
     const fileInfoHeight = baseY + totalLinesOffset;
 
@@ -186,7 +186,7 @@
     } */
 
     :global(text.unit-dots) {
-        font-size: 1.5rem;
+        font-size: 1.0rem;
         font-family: SFMono-Regular, Consolas, "Liberation Mono", Menlo, Courier, monospace;
         dominant-baseline: middle;
         line-height: 1.9;
