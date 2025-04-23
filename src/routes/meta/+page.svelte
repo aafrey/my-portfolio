@@ -237,27 +237,30 @@
       <StackedBar data={languageBreakdown} width={width} />
     </svelte:fragment>
 </Scrolly>
-<!-- <FileLines lines={filteredLines} svgWidth={0.8 * width} /> -->
 
-<Scrolly bind:progress={commitProgress} --scrolly-layout="viz-first" --scrolly-viz-width="3fr">
+<Scrolly bind:progress={commitProgress} class="filelines-scrolly" --scrolly-layout="viz-first" --scrolly-viz-width="3fr">
     <!-- Narrative Block -->
-    {#each commits as commit, index }
-        <p>
-            On {commit.datetime.toLocaleString("en", {dateStyle: "full", timeStyle: "short"})},
-            {index === 0 
-                ? "I set forth on my very first commit, beginning a magical journey of code. You can view it "
-                : "I added another enchanted commit, each line sparkling with a touch of wonder. See it "}
-            <a href="{commit.url}" target="_blank">
-                {index === 0 ? "here" : "here"}
-            </a>.
-            This update transformed {commit.totalLines} lines across { d3.rollups(commit.lines, D => D.length, d => d.file).length } files.
-            With every commit, our project grows into a kingdom of dreams.
-        </p>
-    {/each}
+    <div class="filelines-narrative">
+        {#each commits as commit, index }
+            <p>
+                On {commit.datetime.toLocaleString("en", {dateStyle: "full", timeStyle: "short"})},
+                {index === 0 
+                    ? "I set forth on my very first commit, beginning a magical journey of code. You can view it "
+                    : "I added another enchanted commit, each line sparkling with a touch of wonder. See it "}
+                <a href="{commit.url}" target="_blank">
+                    {index === 0 ? "here" : "here"}
+                </a>.
+                This update transformed {commit.totalLines} lines across { d3.rollups(commit.lines, D => D.length, d => d.file).length } files.
+                With every commit, our project grows into a kingdom of dreams.
+            </p>
+        {/each}
+    </div>
   
     <!-- Visualization -->
     <svelte:fragment slot="viz">
-      <FileLines lines={filteredLines} svgWidth={0.8 * width} />
+        <div class="filelines-viz">
+            <FileLines lines={filteredLines} svgWidth={0.8 * width} />
+        </div>
     </svelte:fragment>
   </Scrolly>
 
@@ -332,6 +335,29 @@
 
     @starting-style {
         r: 0;
+    }
+
+    .filelines-scrolly {
+        display: grid;
+        grid-template-columns: 1fr 2fr;
+        align-items: start;
+        gap: 2rem;
+        margin-block: 3rem;
+    }
+
+    .filelines-narrative {
+        font-size: 1rem;
+        line-height: 1.6;
+    }
+
+    .filelines-viz {
+        overflow-x: auto;
+    }
+
+    @media (max-width: 800px) {
+        .filelines-scrolly {
+            grid-template-columns: 1fr;
+        }
     }
 
 </style>

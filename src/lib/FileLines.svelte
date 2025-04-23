@@ -18,7 +18,7 @@
     const fileInfoMargin = 120;
     const dotsColumnX = firstColumnWidth + fileInfoMargin;
     const approxDotWidth = 18;
-    const dotRowHeight = 10;
+    const dotRowHeight = 8;
     const linesPerDot = 1;
     const baseY = 20;
     const totalLinesOffset = 20;
