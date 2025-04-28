@@ -13,7 +13,11 @@
     let arcGenerator = d3.arc().innerRadius(0).outerRadius(50);
 
     // Assign colors dynamically
-    let colors = d3.scaleOrdinal(d3.schemeTableau10);
+    // let colors = d3.scaleOrdinal(d3.schemeTableau10);
+    // Accessibility: update color scheme
+    $: colors = d3.scaleOrdinal()
+        .domain(data.map((_, i) => i))
+        .range(d3.quantize(d3.interpolateBlues, data.length));
 
     // Make `arcData` and `arcs` reactive
     $: {
@@ -25,27 +29,75 @@
             value: data[d.index].value
         }));
     }
+    
     // Allow us to click wedges
     export let selectedIndex = null;
 
+    // Accessibility: add live announcment
+    let liveText = "";
+
+    /* Add toggle wedge helper function */
+    function toggleWedge(index, event) {
+        if (!event.key || event.key === "Enter") {
+            // selectedIndex = selectedIndex === index ? -1 : index;
+            // selectedYear = selectedIndex !== null ? data[index].label : null;
+            const d = data[index];
+		    liveText = `${d.label}: ${d.value} projects selected.`;
+        }
+    }
+
+    // Accessibility: add computed variable to pie chart
+    let description = '';
+    $: description = `A pie chart showing project counts by year. ${data.map(d => `${d.label}: ${d.value} projects`).join(', ')}.`;
+
+    // Accessibility: add option to display only table or pie chart
+    let showChart = true;
+
+    function toggleView() {
+        showChart = !showChart;
+        liveText = showChart ? "Pie chart view shown." : "Table view shown.";
+    }
+
 </script>
 
+<!-- Accessibility: add button to toggle between pie chart and table -->
+<button 
+  on:click={toggleView}
+  aria-pressed={!showChart}
+  aria-label="Toggle between pie chart and table view"
+  class="toggle-button">
+    {showChart ? 'Show Table' : 'Show Chart'}
+</button>
+
 <!-- Container for Pie Chart and Legend -->
+{#if showChart}
 <div class="container">
     <!-- Pie Chart -->
-    <svg viewBox="-50 -50 100 100">
+    <svg viewBox="-50 -50 100 100"
+        role="img"
+        aria-labelledby="pie-title pie-desc"
+    >
+        <title id="pie-title">Projects by Year</title>
+        <desc id="pie-desc">{description}</desc>
+        <!-- Accessibility: outline pie chart -->
+        <circle class="pie-outline" r="50" />
         {#each arcs as arc, index}
-        <path 
+        <!-- Accessibility updates to path -->
+        <path tabindex="0"
+            role="button"
+            aria-label={arc.label + ": " + arc.value}
             d={arc.path} 
             fill={selectedIndex === index ? "#ff1493" : arc.color} 
             class:selected={selectedIndex === index}
-            on:click={() => {
-                selectedIndex = selectedIndex === index ? -1 : index
-                selectedYear = selectedIndex !== null ? arc.label : null; // Update year filtering
-            }}
+            on:click={(e) => toggleWedge(index, e)}
+
+            on:keyup={(e) => toggleWedge(index, e)}
         />
         {/each}
     </svg>
+
+    <!-- Accessibility: add live text between svg and div -->
+    <p aria-live="polite" class="sr-only">{liveText}</p>
 
     <!-- Legend -->
     <div class="legend">
@@ -70,6 +122,26 @@
         </ul>
     </div>
 </div>
+{:else}
+    <!-- Accessibility: add tabular format -->
+    <table aria-label="Table showing project counts by year" class="data-table">
+        <caption>Projects by Year</caption>
+        <thead>
+            <tr>
+            <th id="year-header" scope="col">Year</th>
+            <th id="projects-header" scope="col">Projects</th>
+            </tr>
+        </thead>      
+        <tbody>
+            {#each data as d, i}
+            <tr>
+                <th id="row-{i}" scope="row">{d.label}</th>
+                <td aria-labelledby="row-{i} projects-header">{d.value}</td>
+            </tr>
+            {/each}
+        </tbody>
+    </table>
+{/if}
 
 <style>
     /* Main container to align pie chart and legend */
@@ -190,19 +262,35 @@ ul:has(.selected) li:not(.selected) {
 
     /* Hovering ability */
     svg:has(path:hover) path:not(:hover) {
-	opacity: 50%;
-    }
-    path:hover {
-	opacity: 100% !important;
-}   
+        opacity: 50%;
+        }
+        path:hover {
+        opacity: 100% !important;
+    }   
+
+    /* add visual confirmation of which pie chart slice is selected */
+    svg:hover path:not(:hover), svg:focus-visible path:not(:focus-visible) { opacity: 50%; }
+
+    /* path:focus-visible {
+        outline: 2px solid #ff1493;
+    } */
+
     /* Apply smooth transitions to pie chart slices */
     path {
         transition: d 300ms ease-in-out, fill 300ms ease-in-out;
+        /* outline: none; */
     }
 
     /* When a path is selected, make all non-selected paths 50% opacity */
     svg:has(.selected) path:not(.selected) {
     opacity: 50%;
+    }
+
+    path:focus-visible {
+        stroke: white;
+        stroke-width: 2px;
+        stroke-dasharray: 4; /* Adjust the dash length as needed */
+        outline: none !important;
     }
 
     .selected {
@@ -216,4 +304,47 @@ ul:has(.selected) li:not(.selected) {
             color: var(--color);
         }
     }
+
+     /* Accessibility: live text */
+     .sr-only {
+        position: absolute;
+        left: -9999px;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+    }
+
+    /* Add styling for table */
+    .data-table {
+        margin-top: 1rem;
+        margin-bottom: 1rem;
+        border-collapse: collapse;
+        width: 100%;
+        max-width: 30em;
+    }
+
+    .data-table caption {
+        font-weight: bold;
+        margin-bottom: 0.5em;
+        text-align: left;
+    }
+
+    .data-table th,
+    .data-table td {
+        border: 1px solid #ccc;
+        padding: 0.5em;
+        text-align: left;
+    }
+
+    .data-table th {
+        background-color: #f0f0f0;
+    }
+    
+    /* Accessibility: add pie chart outline */
+    .pie-outline {
+        stroke: black;
+        fill: none;
+        stroke-width: 1;
+    }
+
 </style>

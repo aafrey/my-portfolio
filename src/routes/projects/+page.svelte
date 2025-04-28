@@ -34,9 +34,17 @@
 <h1> Projects</h1>
 
 <!-- Search bar -->
-<input type="search" bind:value={query}
+<!-- <input type="search" bind:value={query}
        aria-label="Search projects"
-       placeholder="🔍 Search projects..." />
+       placeholder="🔍 Search projects..." /> -->
+<div class="search-wrapper">
+  <span aria-hidden="true" class="emoji">🔍</span>
+  <input 
+    type="search" 
+    bind:value={query}
+    aria-label="Search projects"
+    placeholder="Search projects…" />
+</div>
 
 <Pie data={pieData} bind:selectedIndex={selectedYearIndex} />
 
@@ -55,5 +63,20 @@
       border: 1px solid #ccc;
       border-radius: 5px;
       margin-bottom: 10px;
+      padding-left: 2rem;
+      
   }
+  .search-wrapper {
+  position: relative;
+}
+.emoji {
+  position: absolute;
+  left: 0.5rem;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  font-size: 1rem;
+}
+
+
 </style>
