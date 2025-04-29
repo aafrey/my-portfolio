@@ -30,6 +30,7 @@
         }));
     }
     
+    
     // Allow us to click wedges
     export let selectedIndex = null;
 
@@ -39,8 +40,8 @@
     /* Add toggle wedge helper function */
     function toggleWedge(index, event) {
         if (!event.key || event.key === "Enter") {
-            // selectedIndex = selectedIndex === index ? -1 : index;
-            // selectedYear = selectedIndex !== null ? data[index].label : null;
+            selectedIndex = selectedIndex === index ? -1 : index;
+            selectedYear = selectedIndex !== null ? data[index].label : null;
             const d = data[index];
 		    liveText = `${d.label}: ${d.value} projects selected.`;
         }
@@ -268,6 +269,14 @@ ul:has(.selected) li:not(.selected) {
         opacity: 100% !important;
     }   
 
+    /* Hovering ability */
+    svg:has(.selected) path:not(.selected) {
+        opacity: 50%;
+        }
+        path:hover {
+        opacity: 100% !important;
+    } 
+
     /* add visual confirmation of which pie chart slice is selected */
     svg:hover path:not(:hover), svg:focus-visible path:not(:focus-visible) { opacity: 50%; }
 
@@ -278,7 +287,7 @@ ul:has(.selected) li:not(.selected) {
     /* Apply smooth transitions to pie chart slices */
     path {
         transition: d 300ms ease-in-out, fill 300ms ease-in-out;
-        /* outline: none; */
+        outline: none; 
     }
 
     /* When a path is selected, make all non-selected paths 50% opacity */
